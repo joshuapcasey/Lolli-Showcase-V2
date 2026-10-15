@@ -172,17 +172,22 @@ body.glitch main{animation:glitch .09s steps(2) 8}
   filter:drop-shadow(0 0 30px rgba(255,200,60,.75));animation:popIn .8s cubic-bezier(.2,1.7,.4,1) both, floaty 2.4s ease-in-out .8s infinite}
 @keyframes floaty{50%{transform:translateY(-12px) rotate(-1.5deg)}}
 .envelope > span{position:absolute;display:block}
-.env-back{inset:0;background:linear-gradient(#e8b53a,#b57a0c);border-radius:12px}
-.env-letter{left:8%;right:8%;top:8%;bottom:10%;background:#fffdf3;border-radius:8px;display:grid!important;place-items:center;font-size:clamp(34px,5vw,60px);transition:transform .7s .35s cubic-bezier(.2,1.4,.4,1)}
-.env-front{inset:0;background:linear-gradient(160deg,#ffe28a,#dba01e);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);border-radius:12px}
-.env-flap{left:0;right:0;top:0;height:60%;background:linear-gradient(#fff0b0,#efbe45);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:50% 0;transition:transform .6s;z-index:2;border-radius:12px 12px 0 0}
-.env-name{left:6%;right:6%;bottom:9%;text-align:center;white-space:nowrap;z-index:1;font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(18px,2.4vw,28px);color:#6b3d00}
-.seal{left:50%;top:54%;transform:translate(-50%,-50%);width:22%;aspect-ratio:1;border-radius:50%;z-index:3;background:radial-gradient(circle at 35% 35%,#e8485a,#8e0f1f);
+.env-back{z-index:0;inset:0;background:linear-gradient(#e8b53a,#b57a0c);border-radius:12px}
+.env-letter{left:8%;right:8%;top:8%;bottom:10%;background:#fffdf3;border-radius:8px;display:grid!important;place-items:center;font-size:clamp(34px,5vw,60px);z-index:1;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.env-front{z-index:2;inset:0;background:linear-gradient(160deg,#ffe28a,#dba01e);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);border-radius:12px}
+.env-flap{left:0;right:0;top:0;height:60%;background:linear-gradient(#fff0b0,#efbe45);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:50% 0;transition:transform .6s;z-index:4;border-radius:12px 12px 0 0}
+.env-name{left:6%;right:6%;bottom:9%;text-align:center;white-space:nowrap;z-index:3;font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(18px,2.4vw,28px);color:#6b3d00}
+.seal{left:50%;top:54%;transform:translate(-50%,-50%);width:22%;aspect-ratio:1;border-radius:50%;z-index:5;background:radial-gradient(circle at 35% 35%,#e8485a,#8e0f1f);
   color:#ffd9a0;font-family:'Playfair Display';font-weight:900;font-size:clamp(22px,3.2vw,38px);display:grid!important;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.45);transition:opacity .3s}
 .envelope.opening{animation:none}
 .envelope.opening .env-flap{transform:rotateX(180deg);z-index:0}
 .envelope.opening .seal{opacity:0}
-.envelope.opening .env-letter{transform:translateY(-70%)}
+.envelope.opening .env-letter{animation:letterOut 1.5s .35s cubic-bezier(.3,.8,.3,1) forwards}
+@keyframes letterOut{
+  0%{transform:none;z-index:1}
+  45%{transform:translateY(-95%);z-index:1}
+  46%{transform:translateY(-95%);z-index:6}
+  100%{transform:translateY(-20%) scale(1.25) rotate(-3deg);z-index:6}}
 
 /* ---------- Curtains ---------- */
 #curtains{position:fixed;inset:0;z-index:40;pointer-events:none}
@@ -197,7 +202,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 .ct-small{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(26px,4.4vw,58px);color:#fff3d0;text-shadow:0 3px 12px rgba(0,0,0,.7);animation:popIn .7s both}
 .ct-big{font-family:'Bungee';font-size:clamp(40px,8vw,110px);color:var(--gold);line-height:1;text-shadow:0 6px 0 #5a0010,0 0 50px rgba(255,200,80,.7);animation:popIn .7s both}
 
-/* ---------- Suitcase tray ---------- */
+/* ---------- Prize tray ---------- */
 #tray{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:10px;
   background:rgba(20,5,30,.88);border:3px solid var(--gold);border-radius:20px;padding:8px 14px;box-shadow:0 0 30px rgba(0,0,0,.6);white-space:nowrap}
 #tray .lbl{font-family:'Bungee';font-size:clamp(11px,1.3vw,15px);color:var(--gold);letter-spacing:.05em;margin-right:4px}
@@ -351,7 +356,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
       <div class="sub rise" id="revSub"></div>
       <div class="pass rise" id="pass"></div>
       <div class="perks rise" id="perks"></div>
-      <div class="packed rise" id="packed"><div class="lbl">…and your suitcase is already packed:</div><div class="row" id="packedRow"></div></div>
+      <div class="packed rise" id="packed"><div class="lbl" id="packedLbl"></div><div class="row" id="packedRow"></div></div>
       <figure class="polaroid rise" id="photo" hidden><img id="photoImg" alt=""><figcaption id="photoCap"></figcaption></figure>
       <div class="message rise" id="message"></div>
       <div class="buon rise" id="buon"></div>
@@ -364,7 +369,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 </main>
 
 <div id="curtains"><div class="curtain l"></div><div class="curtain r"></div><div id="curtainText"></div></div>
-<div id="tray" hidden><span class="lbl">Suitcase 🧳</span></div>
+<div id="tray" hidden><span class="lbl">Prizes 🎁</span></div>
 <div id="toast"></div>
 <canvas id="confetti"></canvas>
 <div class="marquee" aria-hidden="true"><div class="strip t"></div><div class="strip b"></div><div class="strip l"></div><div class="strip r"></div></div>
@@ -390,9 +395,9 @@ const CONFIG = {
   // Shown as badges on the final screen
   perks: [
     { emoji: "⛪", text: "Tour the Vatican and Sistine Chapel" },
-    { emoji: "🏛️", text: "Tour the Colosseum" },
-    { emoji: "🍝", text: "Italian pasta making class" },
     { emoji: "🍋", text: "Amalfi Coast Day-Trip" },
+    { emoji: "🍝", text: "Italian pasta making class" },
+    { emoji: "🏛️", text: "Tour the Colosseum" },
     { emoji: "🍦", text: "Gelato. Every. Single. Day." },
   ],
 
@@ -437,6 +442,7 @@ const CONFIG = {
   fakeDestination: "Cleveland, OH",
 
   // Final screen
+  prizesLine: "And every prize you won today is included in the trip, thanks to your amazing extended family!",
   photo: "",                     // e.g. "photos/lolli-and-grandpa.jpg" (leave "" to hide)
   photoCaption: "Ciao, bella!",
   message: "Italy has always been your dream. Rather than help others chase theirs, it's your turn. Pack your bags (and your appetite) — Rome is waiting!",
@@ -1006,6 +1012,7 @@ function buildReveal() {
       <div class="barcode"></div>
     </div>`;
   $("#perks").innerHTML = CONFIG.perks.map(p => `<div class="perk"><span class="e">${p.emoji}</span><span>${p.text}</span></div>`).join("");
+  $("#packedLbl").textContent = CONFIG.prizesLine;
   $("#packedRow").textContent = packed.map(p => p.emoji).join(" ") || "☕ 🍕 🍝 🛵";
   if (CONFIG.photo) {
     $("#photo").hidden = false; $("#photoImg").src = CONFIG.photo; $("#photoCap").textContent = CONFIG.photoCaption;
@@ -1040,7 +1047,7 @@ async function runReveal() {
   busy = true;
   const env = $("#envelope");
   env.classList.add("opening"); Sound.whoosh();
-  await wait(1100);
+  await wait(2100);
   await Curtains.close(`<div class="ct-small">${N}, after ${CONFIG.age} wonderful years…</div>`);
   buildReveal();
   show("reveal");
