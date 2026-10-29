@@ -20,7 +20,7 @@ Open `index.html` and edit the `CONFIG` block at the top of the `<script>`:
 - `themeLine`: the unimpressed line after the host reads off her prizes
 - `prizesLine`: the line above her prizes on the final screen
 - `doorPrizes`, `fakeDestination`: the misdirects (`fakeDestination` is the Vespa road trip, currently Chicago)
-- `photo`: put a picture in a `photos/` folder and set `photo: "photos/lolli-and-grandpa.jpg"`
+- `photos`: which picture goes where (contestant card, Passengers ticket, letter-card banner, memory wall). Each trivia question can also have its own `photo`. Any photo can be a path or `{ src, pos: "x% y%", zoom: 1.2 }` to crop in; on the memory wall, `wide: true` makes a landscape polaroid that takes two spaces.
 - `message` / `signoff`: your note on the final screen
 
 ## Testing shortcuts

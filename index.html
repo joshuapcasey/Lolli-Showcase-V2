@@ -257,14 +257,54 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 .packed .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .packed .chip{font-size:clamp(26px,3.2vw,38px);width:1.7em;height:1.7em;display:grid;place-items:center;border-radius:14px;
   background:rgba(255,207,74,.12);border:2px solid rgba(255,207,74,.7);box-shadow:0 0 18px rgba(255,190,40,.18)}
-.polaroid{margin:0;background:#fff;padding:14px 14px 50px;border-radius:4px;transform:rotate(-3deg);box-shadow:0 20px 50px rgba(0,0,0,.6);max-width:min(460px,86vw);position:relative}
-.polaroid.rise:not(.in){transform:translateY(34px) rotate(-3deg)}
-.polaroid img{display:block;width:100%;height:auto;max-height:52vh;object-fit:cover}
-.polaroid figcaption{position:absolute;left:0;right:0;bottom:12px;font-family:'Playfair Display';font-style:italic;font-weight:700;color:#333;font-size:20px}
+/* Memory wall */
+/* Fixed grid so rows always come out even: 6 across (wide photos take 2 spaces), 4 across on smaller screens */
+.memories{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:clamp(12px,1.8vw,24px);width:min(1240px,100%);padding:8px 0}
+@media (max-width:1099px){.memories{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:599px){.memories{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.memories .pol{margin:0;background:#fff;padding:8px 8px 26px;border-radius:3px;box-shadow:0 14px 34px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(40px) scale(.8) rotate(var(--r));transition:opacity .6s ease, transform .7s cubic-bezier(.2,1.4,.4,1)}
+.memories .pol img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#ddd}
+.memories .pol.wide{grid-column:span 2}
+.memories .pol.wide img{aspect-ratio:3/2}
+.memories.in .pol{opacity:1;transform:rotate(var(--r));animation:sway 7s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes sway{50%{transform:rotate(calc(var(--r) * -0.6)) translateY(-4px)}}
+
+/* Contestant card ("Come on down") */
+.intro-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:clamp(22px,4vw,64px)}
+.intro-text{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6vh,18px)}
+.intro-row .name-big{font-size:clamp(72px,13vw,200px)}
+.contestant{position:relative;padding-bottom:18px}
+.cframe{width:clamp(150px,18vw,270px);aspect-ratio:4/5;padding:9px;border-radius:18px;transform:rotate(-4deg);
+  background:linear-gradient(135deg,#fff3b8,#ffcf4a 35%,#b35a00 70%,#ffe48a);box-shadow:0 0 50px rgba(255,190,40,.55),0 18px 40px rgba(0,0,0,.5)}
+.cframe img{display:block;width:100%;height:100%;object-fit:cover;border-radius:11px}
+.ctag{position:absolute;left:50%;bottom:0;transform:translateX(-50%) rotate(-4deg);font-family:'Bungee';white-space:nowrap;font-size:clamp(11px,1.2vw,15px);
+  letter-spacing:.06em;background:var(--red);color:#fff;padding:.4em 1em;border-radius:999px;box-shadow:0 0 0 3px var(--gold),0 6px 16px rgba(0,0,0,.4)}
+
+/* Trivia answer photo: slides into the side gutter on wide screens, sits inline on narrower ones */
+.qphoto{margin:0;background:#fff;padding:10px 10px 30px;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.6);z-index:20;
+  position:fixed;right:clamp(16px,2.6vw,56px);top:50%;width:var(--pw);transform:translate(150%,-50%) rotate(10deg);transition:transform .9s cubic-bezier(.2,1.3,.4,1)}
+#trivia{--pw:clamp(160px,16vw,290px)}
+.qphoto.in{transform:translate(0,-50%) rotate(5deg)}
+.qphoto img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+@media (max-width:899px){
+  .qphoto{position:static;width:clamp(150px,26vw,220px);transform:scale(.6) rotate(10deg);opacity:0;transition:transform .7s cubic-bezier(.2,1.4,.4,1),opacity .4s}
+  .qphoto.in{transform:rotate(4deg);opacity:1}
+}
+
+/* Zoomed photos are clipped to their own box, not the polaroid border */
+.crop{overflow:hidden;line-height:0}
+.cframe .crop{height:100%;border-radius:11px}
+/* Passenger photo on the scratch-off: fills the ticket inside a thin gold frame */
+.ticket.photo-ticket .under{padding:8px}
+.ticket .tframe{width:100%;height:100%;border-radius:8px;overflow:hidden;box-shadow:0 0 0 3px var(--gold),0 4px 12px rgba(0,0,0,.25)}
+.ticket .tframe img{display:block;width:100%;height:100%;object-fit:cover}
 .message{position:relative;overflow:hidden;width:100%;max-width:760px;margin-top:clamp(10px,2vh,24px);background:#fffaf0;color:#2b1530;border-radius:20px;
   padding:clamp(30px,4vw,46px) clamp(22px,4.5vw,56px) clamp(24px,3.5vw,38px);box-shadow:0 24px 60px rgba(0,0,0,.55);
   font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(19px,2.3vw,28px);line-height:1.55;text-wrap:pretty}
 .message::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:linear-gradient(90deg,var(--it-green) 0 33.3%,var(--it-white) 0 66.6%,var(--it-red) 0)}
+.message .msg-photo{margin:4px 0 clamp(18px,2.6vw,28px);border-radius:12px;overflow:hidden;line-height:0;box-shadow:0 10px 26px rgba(43,21,48,.28)}
+.message .msg-photo img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
 .message .sig{display:block;margin-top:1.1em;font-family:'Nunito',sans-serif;font-style:normal;font-weight:900;font-size:clamp(13px,1.4vw,16px);letter-spacing:.14em;text-transform:uppercase;color:#a08a5c}
 .buon{font-family:'Playfair Display';font-weight:900;font-size:clamp(38px,6vw,78px);color:var(--gold);text-shadow:0 4px 0 rgba(0,0,0,.35),0 0 30px rgba(255,200,80,.35);line-height:1.05;margin-top:clamp(14px,3vh,34px)}
 .row-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:clamp(10px,2vh,24px)}
@@ -289,8 +329,16 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 
   <!-- INTRO -->
   <section class="scene" id="intro"><div class="inner">
-    <div class="headline pop-in">Come on down,</div>
-    <div class="name-big pop-in d2"><span data-name>Tracy</span>!</div>
+    <div class="intro-row">
+      <div class="contestant pop-in" id="contestant" hidden>
+        <div class="cframe"><img id="contestantImg" alt=""></div>
+        <div class="ctag">Today's Contestant</div>
+      </div>
+      <div class="intro-text">
+        <div class="headline pop-in">Come on down,</div>
+        <div class="name-big pop-in d2"><span data-name>Tracy</span>!</div>
+      </div>
+    </div>
     <div class="host" id="introHost"></div>
     <button class="btn pulse" id="introNext" data-primary hidden>Let's Play!</button>
   </div></section>
@@ -312,6 +360,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
       <div class="answers" id="answers"></div>
     </div>
     <div class="verdict" id="verdict"></div>
+    <figure class="qphoto" id="qphoto" hidden><img id="qphotoImg" alt=""></figure>
     <div class="host small" id="qreact"></div>
     <button class="btn" id="triviaNext" data-primary hidden>Next Question ›</button>
   </div></section>
@@ -381,7 +430,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
       <div class="pass rise" id="pass"></div>
       <div class="perks rise" id="perks"></div>
       <div class="packed rise" id="packed"><div class="lbl" id="packedLbl"></div><div class="row" id="packedRow"></div></div>
-      <figure class="polaroid rise" id="photo" hidden><img id="photoImg" alt=""><figcaption id="photoCap"></figcaption></figure>
+      <div class="memories rise" id="memories" hidden></div>
       <div class="message rise" id="message"></div>
       <div class="buon rise" id="buon"></div>
       <div class="row-btns rise" id="endBtns">
@@ -445,6 +494,7 @@ const CONFIG = {
       correct: null,
       reaction: "Every answer is correct when you look this good!",
       prize: { emoji: "🍕", text: "A slice of real pizza" },
+      photo: "photos/p22.jpg",
     },
     {
       q: "What is your best quick dinner?",
@@ -452,18 +502,21 @@ const CONFIG = {
       correct: null,
       reaction: "Bold claim. Might be time to learn a few new recipes, though…",
       prize: { emoji: "🍝", text: "A box of fancy pasta" },
+      photo: "photos/p13.jpg",
     },
     {
       q: "What's your favorite trip experience?",
       answers: ["Dodging goat spit in Shenandoah", "Spring break shots with Fuzzy", "Weekend road trips with the family", "Dodging tornadoes in PCB"],
       correct: null,
       prize: { emoji: "🧳", text: "A shiny new suitcase" },
+      photo: "photos/p01.jpg",
     },
     {
       q: "What's your favorite nickname?",
       answers: ["Buckey", "Terminator", "George", "Lolli"],
       correct: null,
       prize: { emoji: "🛵", text: "A Vespa keychain" },
+      photo: { src: "photos/p18.jpg", pos: "30% 45%", zoom: 1.3 },
     },
   ],
 
@@ -475,8 +528,20 @@ const CONFIG = {
 
   // Final screen
   prizesLine: "And every prize you won today is included in the trip, thanks to your amazing extended family!",
-  photo: "",                     // e.g. "photos/lolli-and-grandpa.jpg" (leave "" to hide)
-  photoCaption: "Ciao, bella!",
+  // ---- Photos (files live in photos/; contact sheet: _contact.html) ----
+  photos: {
+    contestant: "photos/p17.jpg",   // gold frame on the "Come on down" screen
+    passengers: { src: "photos/p07.jpg", pos: "50% 22%" },   // fills scratch-off ticket 1
+    message: "photos/p11.jpg",      // wide banner across the top of the letter card
+    // Any photo can be "photos/pNN.jpg" or { src, pos: "x% y%" (crop focus), zoom: 1.2 }
+    // On the memory wall, add wide: true for a landscape polaroid (good for group shots)
+    memories: [                     // polaroid wall on the final screen
+      "photos/p05.jpg", "photos/p25.jpg", "photos/p24.jpg", "photos/p08.jpg",
+      "photos/p09.jpg", "photos/p23.jpg", "photos/p04.jpg", "photos/p12.jpg",
+      { src: "photos/p03.jpg", wide: true, zoom: 1.15, pos: "50% 48%" },
+      "photos/p10.jpg", "photos/p27.jpg",
+    ],
+  },
   message: "Italy has always been your dream. Rather than help others chase theirs, it's your turn. Pack your bags (and your appetite) — Italy is waiting!",
   signoff: "With all our love, the whole family",
 };
@@ -730,6 +795,18 @@ const Confetti = (() => {
 })();
 
 /* ---------------------------- HELPERS ---------------------------- */
+const photoSrc = ph => (ph && typeof ph === "object" ? ph.src : ph) || "";
+function setPhoto(img, ph) {
+  img.src = photoSrc(ph);
+  const pos = ph && ph.pos || "50% 50%", zoom = ph && ph.zoom || 1;
+  img.style.objectPosition = pos;
+  img.style.transformOrigin = pos;
+  img.style.transform = zoom !== 1 ? `scale(${zoom})` : "";
+  if (zoom !== 1 && !img.parentElement.classList.contains("crop")) {
+    const box = document.createElement("div"); box.className = "crop";
+    img.replaceWith(box); box.append(img);
+  }
+}
 function show(id) { $$(".scene").forEach(s => s.classList.toggle("active", s.id === id)); $("#" + id).scrollTop = 0; }
 
 // Host lines fade in whole, then hold long enough to read before the show moves on
@@ -786,6 +863,7 @@ let busy = false;
 
 /* ---------------------------- SCENES ---------------------------- */
 async function runIntro() {
+  if (CONFIG.photos.contestant) { setPhoto($("#contestantImg"), CONFIG.photos.contestant); $("#contestant").hidden = false; }
   show("intro");
   Sound.fanfare(); Sound.applause(4);
   Confetti.burst(GOLD, 180);
@@ -848,6 +926,7 @@ function renderQ() {
     box.append(b);
   });
   $("#verdict").textContent = ""; $("#qreact").textContent = ""; $("#qreact").classList.remove("shown");
+  $("#qphoto").classList.remove("in"); $("#qphoto").hidden = true;
   $("#triviaNext").hidden = true;
 }
 function runTrivia() { show("trivia"); qi = 0; renderQ(); }
@@ -870,6 +949,11 @@ async function answer(i) {
     Sound.ding(); Confetti.burst(GOLD, 60);
     $("#verdict").textContent = "…but it's your birthday. It counts!";
   }
+  if (q.photo) {
+    setPhoto($("#qphotoImg"), q.photo); $("#qphoto").hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => $("#qphoto").classList.add("in")));
+    Sound.whoosh();
+  }
   await wait(500);
   if (q.reaction) await say($("#qreact"), q.reaction);
   await wait(400);
@@ -891,7 +975,7 @@ async function answer(i) {
 
 /* --- Scratch-off --- */
 const TICKETS = [
-  { label: "Passengers", emoji: "💑", value: `${CONFIG.nickname} + ${CONFIG.partnerNickname}` },
+  { label: "Passengers", emoji: "💑", photo: CONFIG.photos.passengers, value: "" },
   { label: "Destination", emoji: "🌆", value: CONFIG.fakeDestination },
   { label: "Your Ride", emoji: "🎁", value: "See the Showcase!", last: true },
 ];
@@ -908,8 +992,13 @@ async function runScratch() {
       <div class="under"><div class="label"></div><div class="emoji"></div><div class="value"></div></div>
       <canvas></canvas><div class="lockmsg">🔒 Scratch ticket ${i} first</div>`;
     el.querySelector(".label").textContent = t.label;
-    el.querySelector(".emoji").textContent = t.emoji;
     el.querySelector(".value").textContent = t.value;
+    if (t.photo) {
+      el.classList.add("photo-ticket");
+      const under = el.querySelector(".under");
+      under.innerHTML = `<div class="tframe"><img alt=""></div>`;
+      setPhoto(under.querySelector("img"), t.photo);
+    } else el.querySelector(".emoji").textContent = t.emoji;
     box.append(el);
   });
   await document.fonts.ready;
@@ -1053,10 +1142,17 @@ function buildReveal() {
   $("#packedLbl").textContent = CONFIG.prizesLine;
   const won = packed.length ? packed : [CONFIG.consolation, ...CONFIG.trivia.map(q => q.prize)];
   $("#packedRow").innerHTML = won.map(p => `<span class="chip" title="${p.text}">${p.emoji}</span>`).join("");
-  if (CONFIG.photo) {
-    $("#photo").hidden = false; $("#photoImg").src = CONFIG.photo; $("#photoCap").textContent = CONFIG.photoCaption;
-  }
+  const mem = CONFIG.photos.memories || [];
+  $("#memories").hidden = !mem.length;
+  $("#memories").innerHTML = mem.map((src, i) =>
+    `<figure class="pol${src && src.wide ? " wide" : ""}" style="--r:${[-5, 3, -2, 5, -4, 2][i % 6]}deg;--d:${(i % 5) * -1.3}s;transition-delay:${i * 90}ms"><img alt=""></figure>`).join("");
+  $$("#memories .pol img").forEach((img, i) => setPhoto(img, mem[i]));
   $("#message").innerHTML = "";
+  if (CONFIG.photos.message) {
+    const banner = document.createElement("div"); banner.className = "msg-photo";
+    banner.innerHTML = `<img alt="">`; setPhoto(banner.firstChild, CONFIG.photos.message);
+    $("#message").append(banner);
+  }
   $("#message").append(CONFIG.message);
   const sig = document.createElement("span"); sig.className = "sig"; sig.textContent = "— " + CONFIG.signoff;
   $("#message").append(sig);
@@ -1082,6 +1178,39 @@ function skylineSVG() {
   return s;
 }
 
+// How the final screen scrolls: where each piece lands on screen, and how long we linger on it (ms)
+const REVEAL_PACE = {
+  revSub:   { block: "nearest", hold: 900 },
+  pass:     { block: "nearest", hold: 1300 },
+  perks:    { block: "center",  hold: 3500, glide: 1800 },
+  packed:   { block: "center",  hold: 3000, glide: 1600 },
+  memories: { block: "center",  hold: 3500, glide: 1500 },
+  message:  { block: "center",  hold: 4500, glide: 1500 },
+  buon:     { block: "nearest", hold: 1000, glide: 1200 },
+  endBtns:  { block: "nearest", hold: 0,    glide: 1000 },
+};
+// A slower, eased scroll than the browser's built-in smooth scroll
+function glideTo(scroller, el, block, ms) {
+  const sr = scroller.getBoundingClientRect(), r = el.getBoundingClientRect();
+  let delta = 0;
+  if (block === "center") delta = r.top - sr.top - (sr.height - r.height) / 2;
+  else if (r.bottom > sr.bottom - 24) delta = r.bottom - sr.bottom + 24;
+  else if (r.top < sr.top) delta = r.top - sr.top - 24;
+  const from = scroller.scrollTop;
+  const to = Math.max(0, Math.min(from + delta, scroller.scrollHeight - scroller.clientHeight));
+  if (Math.abs(to - from) < 2) return Promise.resolve();
+  return new Promise(done => {
+    const t0 = performance.now();
+    const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const tick = now => {
+      const t = Math.min(1, (now - t0) / ms);
+      scroller.scrollTop = from + (to - from) * ease(t);
+      t < 1 ? requestAnimationFrame(tick) : done();
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
 async function runReveal() {
   busy = true;
   const env = $("#envelope");
@@ -1102,7 +1231,7 @@ async function runReveal() {
   Sound.applause(5);
   await wait(900);
   Sound.musicStart();
-  for (const id of ["revSub", "pass", "perks", "packed", "photo", "message", "buon", "endBtns"]) {
+  for (const id of ["revSub", "pass", "perks", "packed", "memories", "message", "buon", "endBtns"]) {
     const el = $("#" + id); if (el.hidden) continue;
     if (id === "perks") {
       // Hold on the ticket so everyone can read it, then clear the stage before scrolling on
@@ -1111,8 +1240,10 @@ async function runReveal() {
       $("#skyline").classList.add("dim");
       await wait(1200);
     }
-    el.classList.add("in"); el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    await wait(id === "pass" ? 1300 : 1000);
+    el.classList.add("in");
+    const step = REVEAL_PACE[id] || { block: "nearest", hold: 1000 };
+    await glideTo($("#reveal"), el, step.block, step.glide || 1400);
+    await wait(step.hold);
   }
   busy = false;
 }
@@ -1126,15 +1257,20 @@ const slots = CONFIG.trivia.length + 1;
 for (let i = 0; i < slots; i++) { const s = document.createElement("span"); s.className = "slot"; s.textContent = "?"; $("#tray").append(s); }
 
 const JUMP = new URLSearchParams(location.search).get("jump"); // testing shortcut: ?jump=doors|trivia|scratch|showcase
+function preloadPhotos() {
+  const P = CONFIG.photos;
+  [P.contestant, P.passengers, ...(P.memories || []), ...CONFIG.trivia.map(q => q.photo)]
+    .concat(P.message).map(photoSrc).filter(Boolean).forEach(src => { const im = new Image(); im.src = src; });
+}
 $("#startBtn").onclick = () => {
-  Sound.init(); Sound.whoosh();
+  Sound.init(); Sound.whoosh(); preloadPhotos();
   ({ doors: runDoors, trivia: () => { $("#tray").hidden = false; runTrivia(); }, scratch: () => { $("#tray").hidden = false; runScratch(); }, showcase: runShowcase }[JUMP] || runIntro)();
 };
 $("#introNext").onclick = () => { Sound.whoosh(); runDoors(); };
 $("#doorsNext").onclick = () => { Sound.whoosh(); runTrivia(); };
 $("#triviaNext").onclick = () => {
   if (busy) return; Sound.whoosh();
-  if (qi < CONFIG.trivia.length - 1) { qi++; renderQ(); } else runScratch();
+  if (qi < CONFIG.trivia.length - 1) { qi++; renderQ(); } else { $("#qphoto").classList.remove("in"); $("#qphoto").hidden = true; runScratch(); }
 };
 $("#scratchNext").onclick = () => { if (!busy) runShowcase(); };
 $("#envelope").onclick = () => { if (!busy) runReveal(); };
