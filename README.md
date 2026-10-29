@@ -7,8 +7,8 @@ A one-page birthday game show that ends by revealing the trip to Italy. It's all
 2. **Come on down, Lolli!**: fanfare, applause, confetti
 3. **Round 1, Pick a Door**: every door is a dud (socks, DMV, toaster). Sad trombone. Consolation prize: ☕
 4. **Round 2, Trivia**: 3 questions. Every answer wins a clue: 🍕 🍝 🛵
-5. **Round 3, Scratch-offs**: Chicago → Lolli + Poppi → … **Cleveland?!** (buzzer)
-6. **The Showcase**: drumroll, curtains open… **A BRAND NEW CAR!** Then a record scratch, then **WRONG ENVELOPE**
+5. **Round 3, Scratch-offs**: Lolli + Poppi → a trip to **Chicago** → "Your ride: see the Showcase!"
+6. **The Showcase**: drumroll, curtains open… **A BRAND NEW VESPA** to ride to Chicago! Then a record scratch, then **WRONG ENVELOPE**
 7. **Golden envelope** → curtains → drumroll → **ITALIA!** Boarding pass, the trip highlights (Vatican, Amalfi Coast, pasta class, Colosseum), a note that her prizes come along thanks to the extended family, your message, and music
 
 ## Customizing
@@ -18,7 +18,7 @@ Open `index.html` and edit the `CONFIG` block at the top of the `<script>`:
 - `trivia`: replace the questions and answers with inside jokes. `correct: null` means every answer wins. Use `0`–`3` to mark a real right answer (wrong answers still get the point).
 - `themeLine`: update it if you change the trivia prizes
 - `prizesLine`: the line above her prizes on the final screen
-- `doorPrizes`, `fakeDestination`: the misdirects
+- `doorPrizes`, `fakeDestination`: the misdirects (`fakeDestination` is the Vespa road trip, currently Chicago)
 - `photo`: put a picture in a `photos/` folder and set `photo: "photos/lolli-and-grandpa.jpg"`
 - `message` / `signoff`: your note on the final screen
 

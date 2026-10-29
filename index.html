@@ -149,11 +149,10 @@ kbd{font-family:'Bungee';border:2px solid currentColor;border-radius:6px;padding
 .ticket .lockmsg{position:absolute;inset:22% 0 0 0;z-index:3;background:rgba(20,5,30,.72);display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;text-shadow:0 2px 6px #000;pointer-events:none}
 .ticket:not(.locked) .lockmsg{display:none}
 .ticket .skip{position:absolute;right:8px;bottom:8px;z-index:4;border:none;border-radius:999px;background:rgba(27,11,38,.85);color:#fff;font-weight:800;font-size:13px;padding:6px 12px;cursor:pointer}
-.ticket.fake.done{animation:shake .5s 2;box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 0 4px #ff5a5a,0 0 40px rgba(255,60,60,.8)}
-.ticket.done:not(.fake){box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 0 4px #4ade80,0 0 34px rgba(74,222,128,.6)}
+.ticket.done{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 0 4px #4ade80,0 0 34px rgba(74,222,128,.6)}
 
 /* ---------- Showcase ---------- */
-.car-stage{width:clamp(280px,56vw,700px)}
+.car-stage{width:clamp(260px,44vw,560px)}
 .car{width:100%;height:auto;display:block;opacity:0}
 .car.in{animation:driveIn 1.3s cubic-bezier(.2,.8,.3,1) forwards}
 .car.in .wheel{animation:spin .35s linear 4}
@@ -318,22 +317,37 @@ body.glitch main{animation:glitch .09s steps(2) 8}
   <!-- SHOWCASE (the fake-out) -->
   <section class="scene" id="showcase"><div class="inner">
     <div class="round-tag">★ The Showcase ★</div>
-    <div class="car-title" id="carTitle" hidden>A Brand New Car!</div>
+    <div class="car-title" id="carTitle" hidden>A Brand New Vespa!</div>
     <div class="wrong" id="wrong" hidden>⚠ Wrong Envelope ⚠</div>
     <div class="car-stage" id="carStage">
-      <svg class="car" id="car" viewBox="0 0 400 180" aria-label="A shiny red car">
-        <defs><linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5466"/><stop offset="1" stop-color="#a8001a"/></linearGradient></defs>
-        <ellipse cx="200" cy="170" rx="175" ry="9" fill="rgba(0,0,0,.4)"/>
-        <path d="M28 122 Q28 96 60 92 L112 88 Q142 44 192 42 L262 42 Q302 44 326 88 L360 94 Q382 98 382 122 L382 136 Q382 144 372 144 L28 144 Q18 144 20 134 Z" fill="url(#carBody)"/>
-        <path d="M128 88 Q150 55 192 54 L214 54 L214 88 Z" fill="#bfe6ff"/>
-        <path d="M228 54 L258 54 Q290 56 308 88 L228 88 Z" fill="#bfe6ff"/>
-        <path d="M58 102 L350 102" stroke="rgba(255,255,255,.4)" stroke-width="3" stroke-linecap="round"/>
-        <path d="M221 92 L221 140" stroke="#7a0012" stroke-width="2"/>
-        <rect x="350" y="106" width="24" height="11" rx="4" fill="#fff6c2"/>
-        <rect x="24" y="106" width="14" height="11" rx="3" fill="#ff9b3d"/>
-        <g fill="#ffcf4a"><ellipse cx="206" cy="33" rx="19" ry="10" transform="rotate(-22 206 33)"/><ellipse cx="244" cy="33" rx="19" ry="10" transform="rotate(22 244 33)"/><circle cx="225" cy="38" r="7"/></g>
-        <g class="wheel"><circle cx="105" cy="144" r="28" fill="#1a1a1a"/><circle cx="105" cy="144" r="14" fill="#c9ced6"/><rect x="102" y="131" width="6" height="26" fill="#8a9099"/></g>
-        <g class="wheel"><circle cx="300" cy="144" r="28" fill="#1a1a1a"/><circle cx="300" cy="144" r="14" fill="#c9ced6"/><rect x="297" y="131" width="6" height="26" fill="#8a9099"/></g>
+      <svg class="car" id="car" viewBox="0 0 400 260" aria-label="A shiny mint-green Vespa scooter">
+        <defs>
+          <linearGradient id="vBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8eedd"/><stop offset="1" stop-color="#5fb89e"/></linearGradient>
+          <linearGradient id="vSeat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a5a32"/><stop offset="1" stop-color="#5e3418"/></linearGradient>
+        </defs>
+        <ellipse cx="205" cy="248" rx="160" ry="8" fill="rgba(0,0,0,.4)"/>
+        <!-- rear body -->
+        <path d="M52 206 C40 150 78 118 138 114 L212 114 C232 114 242 128 242 148 L242 206 Z" fill="url(#vBody)"/>
+        <path d="M70 168 C78 140 110 128 150 128" stroke="rgba(255,255,255,.55)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- floorboard -->
+        <rect x="200" y="194" width="100" height="14" rx="5" fill="#4e9c86"/>
+        <!-- leg shield + steering column -->
+        <path d="M262 206 L306 206 C306 158 300 108 288 66 L268 66 C278 110 274 160 262 206 Z" fill="url(#vBody)"/>
+        <rect x="273" y="40" width="12" height="32" rx="4" fill="#5fb89e"/>
+        <path d="M240 46 C262 40 300 38 326 42" stroke="#c9ced6" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <circle cx="300" cy="44" r="15" fill="#e6f2ef" stroke="#c9ced6" stroke-width="4"/>
+        <circle cx="300" cy="44" r="8" fill="#fff6c2"/>
+        <!-- front fender -->
+        <path d="M276 214 C282 186 344 186 350 214 Z" fill="url(#vBody)"/>
+        <!-- seat -->
+        <path d="M92 116 C92 96 206 94 212 114 Z" fill="url(#vSeat)"/>
+        <!-- tail light -->
+        <rect x="44" y="170" width="12" height="16" rx="4" fill="#ff7a59"/>
+        <!-- wheels -->
+        <g class="wheel"><circle cx="112" cy="216" r="30" fill="#1a1a1a"/><circle cx="112" cy="216" r="15" fill="#c9ced6"/><rect x="109" y="203" width="6" height="26" fill="#8a9099"/></g>
+        <g class="wheel"><circle cx="314" cy="216" r="30" fill="#1a1a1a"/><circle cx="314" cy="216" r="15" fill="#c9ced6"/><rect x="311" y="203" width="6" height="26" fill="#8a9099"/></g>
+        <!-- bow -->
+        <g fill="#ffcf4a"><ellipse cx="132" cy="92" rx="19" ry="10" transform="rotate(-22 132 92)"/><ellipse cx="170" cy="92" rx="19" ry="10" transform="rotate(22 170 92)"/><circle cx="151" cy="97" r="7"/></g>
       </svg>
     </div>
     <div class="host" id="showHost"></div>
@@ -438,8 +452,8 @@ const CONFIG = {
   // Said after the last trivia question — keep it in sync with the prizes above
   themeLine: "Hmm… espresso, pizza, pasta, a Vespa… I'm sensing a theme here.",
 
-  // Round 3 — the third ticket is the fake-out
-  fakeDestination: "Cleveland, OH",
+  // Round 3 + Showcase — the fake-out: a Vespa road trip, then "wrong envelope"
+  fakeDestination: "Chicago, IL",
 
   // Final screen
   prizesLine: "And every prize you won today is included in the trip, thanks to your amazing extended family!",
@@ -595,8 +609,7 @@ const Sound = (() => {
     },
     honk() {
       if (!ctx) return; const t = now() + .01;
-      [0, .28].forEach(o => { tone(349, t + o, .2, { type: "square", vol: .1, lp: 1600 }); tone(440, t + o, .2, { type: "square", vol: .1, lp: 1600 }); });
-    },
+      [0, .2].forEach(o => { tone(740, t + o, .13, { type: "square", vol: .09, lp: 2600 }); tone(932, t + o, .13, { type: "square", vol: .09, lp: 2600 }); });    },
     scratchy() {
       if (!ctx) return;
       noise(now(), .06, { ftype: "highpass", freq: 3500, vol: .05, rel: .05 });
@@ -849,9 +862,9 @@ async function answer(i) {
 
 /* --- Scratch-off --- */
 const TICKETS = [
-  { label: "Departing", emoji: "🛫", value: `${CONFIG.from.city} (${CONFIG.from.code})` },
   { label: "Passengers", emoji: "💑", value: `${N} + ${P}` },
-  { label: "Destination", emoji: "🤔", value: CONFIG.fakeDestination, fake: true },
+  { label: "Destination", emoji: "🌆", value: CONFIG.fakeDestination },
+  { label: "Your Ride", emoji: "🎁", value: "See the Showcase!", last: true },
 ];
 let scratched = 0;
 
@@ -861,7 +874,7 @@ async function runScratch() {
   const box = $("#tickets"); box.innerHTML = "";
   TICKETS.forEach((t, i) => {
     const el = document.createElement("div");
-    el.className = "ticket" + (i > 0 ? " locked" : "") + (t.fake ? " fake" : "");
+    el.className = "ticket" + (i > 0 ? " locked" : "");
     el.innerHTML = `<div class="t-head">★ Ticket ${i + 1} ★</div>
       <div class="under"><div class="label"></div><div class="emoji"></div><div class="value"></div></div>
       <canvas></canvas><div class="lockmsg">🔒 Scratch ticket ${i} first</div>`;
@@ -936,23 +949,22 @@ async function onTicket(i, el) {
   scratched++;
   const host = $("#scratchHost");
   const next = $$(".ticket")[i + 1];
-  if (TICKETS[i].fake) {
-    Sound.buzzer();
-    await say(host, `${CONFIG.fakeDestination}?! Hold on… that can't be right. PRODUCERS?!`);
-    await wait(500);
+  Sound.ding(); Confetti.burst(GOLD, 70);
+  if (TICKETS[i].last) {
+    Sound.drumroll(1); await wait(1000); Sound.crash();
+    await say(host, `Your ride to ${CONFIG.fakeDestination.split(",")[0]} is SO fancy, it gets its own showcase!`);
     reveal($("#scratchNext"), true);
     return;
   }
-  Sound.ding(); Confetti.burst(GOLD, 70);
-  if (i === 0) say(host, `Departing from ${CONFIG.from.city}… so we're going somewhere!`);
-  else if (i === 1) { Sound.applause(2.5); say(host, `TWO tickets — for ${N} AND ${P}! Now for the big one…`); }
+  if (i === 0) { Sound.applause(2.5); say(host, `TWO tickets — for ${N} AND ${P}! We're going somewhere…`); }
+  else if (i === 1) say(host, `A trip to ${CONFIG.fakeDestination}! Deep dish, here we come! But how will you get there…?`);
   if (next) setTimeout(() => next._unlock(), 600);
 }
 
 /* --- Showcase fake-out --- */
 async function runShowcase() {
   busy = true;
-  await Curtains.close(`<div class="ct-small">And now, ${N}…</div><div class="ct-big">The Showcase!</div>`);
+  await Curtains.close(`<div class="ct-small">Your ride to ${CONFIG.fakeDestination.split(",")[0]}, ${N}…</div><div class="ct-big">The Showcase!</div>`);
   show("showcase");
   Sound.fanfare();
   await wait(1700);
@@ -964,7 +976,7 @@ async function runShowcase() {
   await wait(700);
   Sound.honk(); Sound.bigFanfare(); Sound.applause(4.5);
   Confetti.rain(GOLD, 3500, 3);
-  say($("#showHost"), "Brand new, fully loaded, with a big shiny bow on top!!");
+  say($("#showHost"), `Cruise all the way to ${CONFIG.fakeDestination.split(",")[0]} in Italian style — with a big shiny bow on top!!`);
   await wait(4300);
 
   // …record scratch
@@ -975,7 +987,7 @@ async function runShowcase() {
   $("#car").classList.remove("in"); $("#car").classList.add("busted");
   $("#carTitle").hidden = true; $("#wrong").hidden = false;
   Sound.buzzer();
-  await say($("#showHost"), "Uh-oh… the producers are telling me that car belongs to the NEXT contestant!");
+  await say($("#showHost"), `Uh-oh… the producers are telling me that Vespa — and that trip to ${CONFIG.fakeDestination.split(",")[0]} — belong to the NEXT contestant!`);
   await wait(1100);
   $("#carStage").hidden = true;
   await say($("#showHost"), `${N}… it looks like THIS envelope has your name on it.`);
