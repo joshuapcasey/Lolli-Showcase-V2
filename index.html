@@ -306,10 +306,11 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 .ticket .tframe img{display:block;width:100%;height:100%;object-fit:cover}
 .message{position:relative;overflow:hidden;width:100%;max-width:760px;margin-top:clamp(10px,2vh,24px);background:#fffaf0;color:#2b1530;border-radius:20px;
   padding:clamp(30px,4vw,46px) clamp(22px,4.5vw,56px) clamp(24px,3.5vw,38px);box-shadow:0 24px 60px rgba(0,0,0,.55);
-  font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(19px,2.3vw,28px);line-height:1.55;text-wrap:pretty}
+  font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(17px,1.9vw,24px);line-height:1.5;text-wrap:balance}
 .message::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:linear-gradient(90deg,var(--it-green) 0 33.3%,var(--it-white) 0 66.6%,var(--it-red) 0)}
 .message .msg-photo{margin:4px 0 clamp(18px,2.6vw,28px);border-radius:12px;overflow:hidden;line-height:0;box-shadow:0 10px 26px rgba(43,21,48,.28)}
 .message .msg-photo img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+.message .close{display:block;margin-top:.45em;font-weight:900;font-size:1.25em;line-height:1.3}
 .message .sig{display:block;margin-top:1.1em;font-family:'Nunito',sans-serif;font-style:normal;font-weight:900;font-size:clamp(13px,1.4vw,16px);letter-spacing:.14em;text-transform:uppercase;color:#a08a5c}
 .buon{font-family:'Playfair Display';font-weight:900;font-size:clamp(38px,6vw,78px);color:var(--gold);text-shadow:0 4px 0 rgba(0,0,0,.35),0 0 30px rgba(255,200,80,.35);line-height:1.05;margin-top:clamp(14px,3vh,34px)}
 .row-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:clamp(10px,2vh,24px)}
@@ -548,7 +549,8 @@ const CONFIG = {
       "photos/p10.jpg", "photos/p27.jpg",
     ],
   },
-  message: "Italy has always been your dream. Rather than help others chase theirs, it's your turn. Pack your bags, sense of adventure, and your appetite — Italy is waiting!",
+  message: "Italy has always been your dream. Rather than help others chase theirs, it's your turn. Pack your bags, sense of adventure, and your appetite.",
+  messageClose: "Italy is waiting!",   // its own line, just above the signature
   signoff: "With all our love, the whole family",
 };
 
@@ -1175,6 +1177,10 @@ function buildReveal() {
     $("#message").append(banner);
   }
   $("#message").append(CONFIG.message);
+  if (CONFIG.messageClose) {
+    const close = document.createElement("span"); close.className = "close"; close.textContent = CONFIG.messageClose;
+    $("#message").append(close);
+  }
   const sig = document.createElement("span"); sig.className = "sig"; sig.textContent = "— " + CONFIG.signoff;
   $("#message").append(sig);
   $("#buon").textContent = `Buon Compleanno, ${N}!`;
