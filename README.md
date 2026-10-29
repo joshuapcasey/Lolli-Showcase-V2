@@ -4,19 +4,20 @@ A one-page birthday game show that ends by revealing the trip to Italy. It's all
 
 ## The flow (about 4–5 minutes)
 1. **Start**: tap "Start the Show" (this turns sound on)
-2. **Come on down, Lolli!**: fanfare, applause, confetti
+2. **Come on down, Tracy!**: fanfare, applause, confetti
 3. **Round 1, Pick a Door**: every door is a dud (socks, DMV, toaster). Sad trombone. Consolation prize: ☕
-4. **Round 2, Trivia**: 3 questions. Every answer wins a clue: 🍕 🍝 🛵
+4. **Round 2, Trivia**: 3 questions. Every answer wins a prize: 🍕 🍝 🛵. Then the host reads off her winnings… "Cool."
 5. **Round 3, Scratch-offs**: Lolli + Poppi → a trip to **Chicago** → "Your ride: see the Showcase!"
 6. **The Showcase**: drumroll, curtains open… **A BRAND NEW VESPA** to ride to Chicago! Then a record scratch, then **WRONG ENVELOPE**
 7. **Golden envelope** → curtains → drumroll → **ITALIA!** Boarding pass, the trip highlights (Vatican, Amalfi Coast, pasta class, Colosseum), a note that her prizes come along thanks to the extended family, your message, and music
 
 ## Customizing
 Open `index.html` and edit the `CONFIG` block at the top of the `<script>`:
-- `partner`: what the family calls your dad (currently "Poppi")
+- `name` / `partner`: Tracy and Jimbo, used everywhere they're addressed
+- `nickname` / `partnerNickname`: Lolli and Poppi, used only in the game title and the Passengers scratch-off
 - `depart` / `return`: trip dates on the boarding pass
 - `trivia`: replace the questions and answers with inside jokes. `correct: null` means every answer wins. Use `0`–`3` to mark a real right answer (wrong answers still get the point).
-- `themeLine`: update it if you change the trivia prizes
+- `themeLine`: the unimpressed line after the host reads off her prizes
 - `prizesLine`: the line above her prizes on the final screen
 - `doorPrizes`, `fakeDestination`: the misdirects (`fakeDestination` is the Vespa road trip, currently Chicago)
 - `photo`: put a picture in a `photos/` folder and set `photo: "photos/lolli-and-grandpa.jpg"`
@@ -30,6 +31,9 @@ Add `?jump=doors`, `?jump=trivia`, `?jump=scratch` or `?jump=showcase` to the UR
 2. Upload `index.html` (and the `photos/` folder if you have one): **Add file → Upload files → Commit**.
 3. **Settings → Pages → Source: Deploy from a branch → `main` / root → Save**.
 4. After about a minute it's live at `https://<your-username>.github.io/lolli-showcase/`.
+
+## Heads up
+After uploading a new version, wait a minute and hard-refresh (Cmd+Shift+R). Browsers can keep showing the old copy for up to 10 minutes.
 
 ## On the big day
 - Open the link on a laptop hooked up to the TV, turn the volume up, and press **F** for full screen.

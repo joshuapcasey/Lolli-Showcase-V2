@@ -272,7 +272,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
   <!-- START -->
   <section class="scene active" id="start"><div class="inner">
     <div class="tagline">A very special birthday game show</div>
-    <h1 class="logo"><span>The</span><span class="nm" data-name>Lolli</span><span>Showcase</span></h1>
+    <h1 class="logo"><span>The</span><span class="nm" data-title>Lolli</span><span>Showcase</span></h1>
     <button class="btn pulse" id="startBtn" data-primary>▶ Start the Show</button>
     <p class="hint">🔊 Turn your sound up!<span id="fsHint"> · Press <kbd>F</kbd> for full screen</span></p>
   </div></section>
@@ -280,7 +280,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
   <!-- INTRO -->
   <section class="scene" id="intro"><div class="inner">
     <div class="headline pop-in">Come on down,</div>
-    <div class="name-big pop-in d2"><span data-name>Lolli</span>!</div>
+    <div class="name-big pop-in d2"><span data-name>Tracy</span>!</div>
     <div class="host" id="introHost"></div>
     <button class="btn pulse" id="introNext" data-primary hidden>Let's Play!</button>
   </div></section>
@@ -295,7 +295,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
 
   <!-- ROUND 2: TRIVIA -->
   <section class="scene" id="trivia"><div class="inner">
-    <div class="round-tag">Round 2 · How Well Do You Know <span data-name>Lolli</span>?</div>
+    <div class="round-tag">Round 2 · How Well Do You Know <span data-name>Tracy</span>?</div>
     <div class="qcard">
       <div class="qnum" id="qnum"></div>
       <div class="qtext" id="qtext"></div>
@@ -357,7 +357,7 @@ body.glitch main{animation:glitch .09s steps(2) 8}
       <span class="env-front"></span>
       <span class="env-flap"></span>
       <span class="seal" id="sealLetter">L</span>
-      <span class="env-name">For: <span data-name>Lolli</span></span>
+      <span class="env-name">For: <span data-name>Tracy</span></span>
     </button>
   </div></section>
 
@@ -397,8 +397,11 @@ body.glitch main{animation:glitch .09s steps(2) 8}
    ✏️  EDIT ME — everything personal lives here.
    ===================================================================== */
 const CONFIG = {
-  name: "Lolli",
-  partner: "Poppi",
+  name: "Tracy",                 // used everywhere she's addressed
+  partner: "Jimbo",
+  // Grandparent nicknames: the game title and the Passengers scratch-off only
+  nickname: "Lolli",
+  partnerNickname: "Poppi",
   age: 60,
 
   from: { city: "Chicago", code: "ORD" },
@@ -427,30 +430,30 @@ const CONFIG = {
   // Use 0–3 to mark a real right answer (wrong answers still get a point — it's her birthday).
   trivia: [
     {
-      q: "How many candles are on Lolli's cake this year?",
+      q: "How many candles are on Tracy's cake this year?",
       answers: ["39… again", "60 and fabulous", "A lady never tells", "Enough to set off the smoke alarm"],
       correct: null,
       reaction: "Every answer is correct when you look this good!",
       prize: { emoji: "🍕", text: "A slice of real pizza" },
     },
     {
-      q: "What's the secret ingredient in everything Lolli cooks?",
+      q: "What's the secret ingredient in everything Tracy cooks?",
       answers: ["Love", "Butter", "More butter", "None of your business"],
       correct: null,
-      reaction: "Hold onto that recipe… you might be learning a few new ones soon.",
+      reaction: "Bold claim. Might be time to learn a few new recipes, though…",
       prize: { emoji: "🍝", text: "A box of fancy pasta" },
     },
     {
       q: "Who is the greatest grandma in the whole world?",
-      answers: ["Lolli", "Lolli", "Lolli", "Also Lolli"],
+      answers: ["Tracy", "Tracy", "Tracy", "Also Tracy"],
       correct: null,
       reaction: "The judges have spoken. It's unanimous!",
       prize: { emoji: "🛵", text: "A Vespa keychain" },
     },
   ],
 
-  // Said after the last trivia question — keep it in sync with the prizes above
-  themeLine: "Hmm… espresso, pizza, pasta, a Vespa… I'm sensing a theme here.",
+  // Said after the last trivia question, right after the host reads off her prizes
+  themeLine: "…Cool.",
 
   // Round 3 + Showcase — the fake-out: a Vespa road trip, then "wrong envelope"
   fakeDestination: "Chicago, IL",
@@ -852,7 +855,11 @@ async function answer(i) {
   await wait(1300);
   const last = qi === CONFIG.trivia.length - 1;
   if (last) {
-    await say($("#qreact"), packed.map(p => p.emoji).join(" ") + "  " + CONFIG.themeLine);
+    const items = packed.map(p => p.text.charAt(0).toLowerCase() + p.text.slice(1));
+    const list = items.length > 1 ? items.slice(0, -1).join(", ") + ", and " + items[items.length - 1] : items[0];
+    await say($("#qreact"), `Let's review your winnings so far: ${list}.`);
+    await wait(900);
+    await say($("#qreact"), CONFIG.themeLine);
   }
   const nb = $("#triviaNext");
   nb.textContent = last ? "On to Round 3 ›" : "Next Question ›";
@@ -862,7 +869,7 @@ async function answer(i) {
 
 /* --- Scratch-off --- */
 const TICKETS = [
-  { label: "Passengers", emoji: "💑", value: `${N} + ${P}` },
+  { label: "Passengers", emoji: "💑", value: `${CONFIG.nickname} + ${CONFIG.partnerNickname}` },
   { label: "Destination", emoji: "🌆", value: CONFIG.fakeDestination },
   { label: "Your Ride", emoji: "🎁", value: "See the Showcase!", last: true },
 ];
@@ -976,7 +983,7 @@ async function runShowcase() {
   await wait(700);
   Sound.honk(); Sound.bigFanfare(); Sound.applause(4.5);
   Confetti.rain(GOLD, 3500, 3);
-  say($("#showHost"), `Cruise all the way to ${CONFIG.fakeDestination.split(",")[0]} in Italian style — with a big shiny bow on top!!`);
+  say($("#showHost"), `Cruise all the way to ${CONFIG.fakeDestination.split(",")[0]} in style — with a big shiny bow on top!!`);
   await wait(4300);
 
   // …record scratch
@@ -1085,6 +1092,7 @@ async function runReveal() {
 
 /* ---------------------------- WIRING ---------------------------- */
 $$("[data-name]").forEach(e => e.textContent = N);
+$$("[data-title]").forEach(e => e.textContent = CONFIG.nickname);
 $("#sealLetter").textContent = N[0];
 
 const slots = CONFIG.trivia.length + 1;
